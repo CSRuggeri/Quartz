@@ -1,3 +1,4 @@
+// src/database/db.js
 import dotenv from 'dotenv';
 import { Sequelize } from 'sequelize';
 import { readdirSync } from 'fs';
@@ -31,21 +32,27 @@ const modelDefiners = [];
 const modelFiles = readdirSync(path.join(__dirname, './models'))
   .filter((file) => file.indexOf('.') !== 0 && file.slice(-3) === '.js');
 
-for (const file of modelFiles) {
-  const modelPath = pathToFileURL(path.join(__dirname, './models', file));
-  console.log(`Importing model from: ${modelPath.href}`);
+const loadModels = async () => {
+  for (const file of modelFiles) {
+    const modelPath = pathToFileURL(path.join(__dirname, './models', file));
+    console.log(`Importing model from: ${modelPath.href}`);
 
-  try {
-    const modelDefiner = await import(modelPath.href); // Use .href to get the URL string
-    modelDefiners.push(modelDefiner.default || modelDefiner);
-  } catch (err) {
-    console.error(`Failed to import ${modelPath.href}:`, err);
+    try {
+      const modelDefiner = await import(modelPath.href);
+      modelDefiners.push(modelDefiner.default || modelDefiner);
+    } catch (err) {
+      console.error(`Failed to import ${modelPath.href}:`, err);
+    }
   }
-}
 
-modelDefiners.forEach((model) => model(sequelize));
+  modelDefiners.forEach((model) => model(sequelize));
 
-const { Products, Users } = sequelize.models;
+  const { Products, Users } = sequelize.models;
 
-export { sequelize as db, Products, Users };
+  // Log the models to ensure they are loaded correctly
+  console.log('Loaded models:', { Products, Users });
 
+  return { Products, Users };
+};
+
+export { sequelize as db, loadModels };

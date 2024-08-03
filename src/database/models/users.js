@@ -1,7 +1,8 @@
+// src/models/user.js
 import { DataTypes } from 'sequelize';
 
 export default (sequelize) => {
-  const User = sequelize.define('User', {
+  const Users = sequelize.define('Users', {
     status: {
       type: DataTypes.ENUM,
       values: ['No contactado', 'No le interesa', 'Volver a llamar', 'Contactado'],
@@ -38,10 +39,9 @@ export default (sequelize) => {
     },
   });
 
-  User.associate = (models) => {
-    // Define associations here
-    User.belongsToMany(models.Product, { through: 'UserProducts', foreignKey: 'userId' });
+  Users.associate = (models) => {
+    Users.belongsToMany(models.Product, { through: 'UserProducts', foreignKey: 'userId' });
   };
 
-  return User;
+  return Users;
 };
