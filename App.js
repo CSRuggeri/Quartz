@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { db } from './src/database/db.js';
-// import mainRoutes from './src/Routes/mainRoutes.js';
+import router from './src/routes/mainRouter.js';
 
 const app = express();
 const port = 3000;
@@ -9,7 +9,7 @@ const port = 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// app.use('/', mainRoutes);
+app.use('/', router);
 
 db.sync()
   .then(() => {
