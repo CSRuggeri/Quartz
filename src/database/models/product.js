@@ -1,47 +1,38 @@
-// src/database/models/users.js
 import { DataTypes } from 'sequelize';
 
 export default (sequelize) => {
-  const User = sequelize.define('User', {
-    status: {
-      type: DataTypes.ENUM,
-      values: ['No contactado', 'No le interesa', 'Volver a llamar', 'Contactado'],
+  const Product = sequelize.define('Product', {
+    id: {
+      type: DataTypes.UUID,
       allowNull: false,
-      defaultValue: 'No contactado',
+      primaryKey: true, // Add this if `id` is meant to be the primary key
     },
-    nombre: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    telefono: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    mail: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isEmail: true,
-      },
-    },
-    pais: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    productos: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER),
+    description: {
+      type: DataTypes.TEXT,
       allowNull: true,
     },
-    fecha: {
-      type: DataTypes.DATE,
+    available: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+    },
+    price: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false,
+    },
+    image: {
+      type: DataTypes.STRING,
       allowNull: true,
-      defaultValue: DataTypes.NOW,
     },
   });
 
-  User.associate = (models) => {
-    User.belongsToMany(models.Product, { through: 'UserProducts', foreignKey: 'userId' });
+  Product.associate = (models) => {
+    // Define associations here, if any
   };
 
-  return User;
+  return Product;
 };
