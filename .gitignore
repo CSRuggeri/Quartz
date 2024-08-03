@@ -1,0 +1,40 @@
+/# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+
+# Environment files
+.env
+.env.*  # if you use multiple .env files (e.g., .env.development, .env.test)
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# npm cache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build directories
+dist/
+build/
+
+# IDE or editor directories
+.vscode/
+.idea/
+
+# Miscellaneous
+*.tgz
+*.gz
+
+# Coverage reports
+coverage/
+
+# Optional: local test files
+test/
+
+# Optional: temporary files
+tmp/
