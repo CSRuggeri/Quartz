@@ -47,12 +47,12 @@ const loadModels = async () => {
 
   modelDefiners.forEach((model) => model(sequelize));
 
-  const { Products, Users } = sequelize.models;
+  const { Products, Users, Upload } = sequelize.models;
 
   // Log the models to ensure they are loaded correctly
-  console.log('Loaded models:', { Products, Users });
+  console.log('Loaded models:', { Products, Users, Upload });
 
-  return { Products, Users };
+  return { Products, Users, Upload};
 };
 
 export { sequelize as db, loadModels };

@@ -1,11 +1,14 @@
+// En src/database/models/product.js
 import { DataTypes } from 'sequelize';
+import { v4 as uuidv4 } from 'uuid'; 
 
 export default (sequelize) => {
-  const Product = sequelize.define('Product', {
+  const Products = sequelize.define('Products', {
     id: {
       type: DataTypes.UUID,
+      defaultValue: () => uuidv4(), 
       allowNull: false,
-      primaryKey: true, // Add this if `id` is meant to be the primary key
+      primaryKey: true,
     },
     name: {
       type: DataTypes.STRING,
@@ -30,9 +33,5 @@ export default (sequelize) => {
     },
   });
 
-  Product.associate = (models) => {
-    // Define associations here, if any
-  };
-
-  return Product;
+  return Products;
 };

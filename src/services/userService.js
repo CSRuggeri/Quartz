@@ -1,4 +1,3 @@
-// In your userService.js
 import { loadModels } from '../database/db.js';
 
 const createUser = async (userData) => {
